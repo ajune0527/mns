@@ -21,6 +21,7 @@ public class SettingWindow implements Configurable {
     private JPanel mkt_setting_radio;
     private JLabel hide_mode_desc;
     private JCheckBox hide_mode_setting;
+    private JCheckBox hide_symbol;
     private JLabel sz_stock;
     private JTextField sz_stock_input;
     private JLabel idx_label;
@@ -100,6 +101,7 @@ public class SettingWindow implements Configurable {
         settings.cryptoCurrencies = crypto_currency_input.getText();
         settings.isRedRise = red_rise_green_fall.isSelected();
         settings.isHiddenMode = hide_mode_setting.isSelected();
+        settings.isHiddenSymbol = hide_symbol.isSelected();
         settings.indicesFrequency = Integer.parseInt(refresh_frequency_indices_list.getSelectedItem().toString());
         settings.stockFrequency = Integer.parseInt(refresh_frequency_stock_list.getSelectedItem().toString());
         settings.fundFrequency = Integer.parseInt(refresh_frequency_fund_list.getSelectedItem().toString());
@@ -127,9 +129,11 @@ public class SettingWindow implements Configurable {
         red_rise_green_fall.setSelected(settings.isRedRise);
         red_fall_green_rise.setSelected(!settings.isRedRise);
         boolean isHidden = settings.isHiddenMode;
+        boolean isHiddenSymbol = settings.isHiddenSymbol;
         red_rise_green_fall.setEnabled(!isHidden);
         red_fall_green_rise.setEnabled(!isHidden);
         hide_mode_setting.setSelected(isHidden);
+        hide_symbol.setSelected(isHidden);
         refresh_frequency_indices_list.setSelectedItem(String.valueOf(settings.indicesFrequency));
         refresh_frequency_stock_list.setSelectedItem(String.valueOf(settings.stockFrequency));
         refresh_frequency_fund_list.setSelectedItem(String.valueOf(settings.fundFrequency));

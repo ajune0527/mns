@@ -21,6 +21,7 @@ public class AppSettingState implements PersistentStateComponent<AppSettingState
 
     public final static boolean IS_RED_RISE = true;
     public final static boolean IS_HIDDEN_MODE = false;
+    public final static boolean IS_HIDDEN_SYMBOL_MODE = false;
     public final static String US_STOCKS = "AAPL;TSLA;NFLX;MSFT";
     public final static String HK_STOCKS = "00981;09988;09618";
     public final static String SH_STOCKS = "600036";
@@ -33,6 +34,7 @@ public class AppSettingState implements PersistentStateComponent<AppSettingState
 
     public boolean isRedRise = true;
     public boolean isHiddenMode = false;
+    public boolean isHiddenSymbol = false;
     public String usStocks = "AAPL;TSLA;NFLX;MSFT";
     public String hkStocks = "00981;09988;09618";
     public String shStocks = "600036";
@@ -88,6 +90,7 @@ public class AppSettingState implements PersistentStateComponent<AppSettingState
     public void reset() {
         isRedRise = IS_RED_RISE;
         isHiddenMode = IS_HIDDEN_MODE;
+        isHiddenSymbol = IS_HIDDEN_SYMBOL_MODE;
         usStocks = US_STOCKS;
         hkStocks = HK_STOCKS;
         shStocks = SH_STOCKS;
