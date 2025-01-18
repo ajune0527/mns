@@ -16,12 +16,6 @@
     <rowspec value="center:max(d;4px):noGrow"/>
     <rowspec value="top:3dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:3dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:3dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
-    <rowspec value="top:3dlu:noGrow"/>
-    <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:d:noGrow"/>
     <colspec value="left:4dlu:noGrow"/>
     <colspec value="fill:d:grow"/>
@@ -52,7 +46,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="83066" class="javax.swing.JTextField" binding="sh_stock_input">
+      <component id="83066" class="javax.swing.JTextField" binding="cn_stock_input">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -61,13 +55,13 @@
         </constraints>
         <properties/>
       </component>
-      <component id="96c5d" class="javax.swing.JLabel" binding="sh_stock">
+      <component id="96c5d" class="javax.swing.JLabel" binding="cn_stock">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
-          <text value="上证编码, 分号隔开:"/>
+          <text value="A股编码, 分号隔开:"/>
         </properties>
       </component>
       <component id="bbc94" class="javax.swing.JLabel" binding="us_stock">
@@ -97,7 +91,7 @@
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:max(d;4px):noGrow"/>
         <constraints>
-          <grid row="14" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
           <forms defaultalign-horz="false"/>
         </constraints>
         <properties/>
@@ -123,67 +117,18 @@
           </component>
         </children>
       </grid>
-      <component id="ae82c" class="javax.swing.JCheckBox" binding="hide_mode_setting">
-        <constraints>
-          <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <horizontalAlignment value="2"/>
-          <horizontalTextPosition value="10"/>
-          <text value="隐秘模式"/>
-          <verticalAlignment value="0"/>
-          <verticalTextPosition value="0"/>
-        </properties>
-      </component>
-      <component id="f0c49" class="javax.swing.JLabel" binding="hide_mode_desc">
-        <constraints>
-          <grid row="16" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms defaultalign-horz="false"/>
-        </constraints>
-        <properties>
-          <text value="(标的采用全拼模式, 无涨跌色)"/>
-        </properties>
-      </component>
-      <component id="9a013" class="javax.swing.JLabel" binding="sz_stock">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value="深证编码, 分号隔开:"/>
-        </properties>
-      </component>
-      <component id="e6c1f" class="javax.swing.JTextField" binding="sz_stock_input">
-        <constraints>
-          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-          <forms defaultalign-horz="false"/>
-        </constraints>
-        <properties/>
-      </component>
       <component id="5634a" class="javax.swing.JLabel" binding="idx_label">
         <constraints>
-          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
           <text value="核心指数"/>
         </properties>
       </component>
-      <component id="d73b2" class="javax.swing.JLabel" binding="idx_input_noneditable">
-        <constraints>
-          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms defaultalign-horz="false"/>
-        </constraints>
-        <properties>
-          <text value="usDJI;usIXIC;usINX;usNDX;hkHSI;hkHSTECH;hkHSCEI;hkHSCCI;sh000001;sz399001;sz399006;sh000300;sh000016;sz399903;sh000011;sz399103;sz399330"/>
-        </properties>
-      </component>
       <component id="475e3" class="javax.swing.JTextField" binding="daily_fund_input">
         <constraints>
-          <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
           <forms defaultalign-horz="false"/>
@@ -192,7 +137,7 @@
       </component>
       <component id="b4c38" class="javax.swing.JLabel" binding="mkt_setting_label">
         <constraints>
-          <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -201,7 +146,7 @@
       </component>
       <component id="a9502" class="javax.swing.JLabel" binding="daily_fund">
         <constraints>
-          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -210,7 +155,7 @@
       </component>
       <component id="7bbc1" class="javax.swing.JLabel" binding="crypto_currency">
         <constraints>
-          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -219,7 +164,7 @@
       </component>
       <component id="bb749" class="javax.swing.JTextField" binding="crypto_currency_input">
         <constraints>
-          <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
           <forms defaultalign-horz="false"/>
@@ -229,7 +174,7 @@
       <grid id="d0055" layout-manager="GridLayoutManager" row-count="1" column-count="9" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="20" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="14" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties/>
@@ -312,23 +257,21 @@
       </grid>
       <component id="4ee72" class="javax.swing.JLabel" binding="refresh_frequency_label">
         <constraints>
-          <grid row="20" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
           <text value="刷新频率(单位:秒):"/>
         </properties>
       </component>
-      <component id="f401d" class="javax.swing.JCheckBox" binding="hide_symbol">
+      <component id="af845" class="javax.swing.JTextField" binding="idx_input">
         <constraints>
-          <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <forms/>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <forms defaultalign-horz="false"/>
         </constraints>
-        <properties>
-          <horizontalAlignment value="2"/>
-          <horizontalTextPosition value="10"/>
-          <text value="隐藏编码"/>
-        </properties>
+        <properties/>
       </component>
     </children>
   </grid>

@@ -30,6 +30,7 @@ public class StringResUtils {
     public static final String FUND_SEARCH_FIRM = "基金公司";
     public static final String URL_SEARCH_FUND_FIRM = "http://fund.eastmoney.com/js/jjjz_gs.js";
     public static final String URL_SEARCH_FUND = "http://fund.eastmoney.com/js/fundcode_search.js";
+    public static final String URL_SEARCH_STOCK = "https://searchadapter.eastmoney.com/api/suggest/get";
     public static final String QT_STOCK_URL = "http://qt.gtimg.cn/q=";//腾讯股票数据接口
     public static final String TIANTIAN_FUND_URL = "http://fundgz.1234567.com.cn/js/%s.js?rt=%d";//天天基金数据接口
     public static final String SINA_CRYPTO_CURRENCY_URL = "http://hq.sinajs.cn/list=%s";//新浪数据接口

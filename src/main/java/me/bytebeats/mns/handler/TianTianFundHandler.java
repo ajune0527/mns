@@ -1,11 +1,10 @@
 package me.bytebeats.mns.handler;
 
 import me.bytebeats.mns.listener.MousePressedListener;
-import me.bytebeats.mns.network.HttpClientPool;
-import me.bytebeats.mns.tool.NotificationUtil;
 import me.bytebeats.mns.meta.Fund;
+import me.bytebeats.mns.network.HttpClientPool;
 import me.bytebeats.mns.tool.GsonUtils;
-import me.bytebeats.mns.tool.PinyinUtils;
+import me.bytebeats.mns.tool.NotificationUtil;
 import me.bytebeats.mns.tool.StringResUtils;
 import me.bytebeats.mns.ui.AppSettingState;
 
@@ -180,17 +179,9 @@ public class TianTianFundHandler extends AbstractHandler {
         Object[][] data = new Object[funds.size()][fundColumnNames.length];
         for (int i = 0; i < funds.size(); i++) {
             Fund fund = funds.get(i);
-            String name = fund.getName();
-            if (isInHiddenMode()) {
-                name = PinyinUtils.toPinyin(name);
-            }
-            if (i < funds.size()) {
-                data[i] = new Object[]{name, fund.getFundcode(), fund.getDwjz(), fund.getGsz(),
-                        fund.getEstimateNetValueRatio()};
-                columnTextColors.put(i, Double.parseDouble(fund.getGszzl()));
-            } else {
-                break;
-            }
+            data[i] = new Object[]{fund.getName(), fund.getFundcode(), fund.getDwjz(), fund.getGsz(),
+                    fund.getEstimateNetValueRatio()};
+            columnTextColors.put(i, Double.parseDouble(fund.getGszzl()));
         }
         return data;
     }

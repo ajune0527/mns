@@ -3,14 +3,12 @@ package me.bytebeats.mns;
 import com.intellij.ui.JBColor;
 
 public interface UISettingProvider {
-    boolean isInHiddenMode();
+    boolean isInHiddenSymbolMode();
 
     boolean isRedRise();
 
     default JBColor getTextColor(double offset) {
-        if (isInHiddenMode() || offset == 0.0) {
-            return JBColor.DARK_GRAY;
-        } else if (isRedRise()) {
+        if (isRedRise()) {
             if (offset > 0) {
                 return JBColor.RED;
             } else {

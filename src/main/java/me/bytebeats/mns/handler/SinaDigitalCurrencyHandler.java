@@ -1,17 +1,16 @@
 package me.bytebeats.mns.handler;
 
 import me.bytebeats.mns.listener.MousePressedListener;
+import me.bytebeats.mns.meta.DigitalCurrency;
 import me.bytebeats.mns.network.HttpClientPool;
 import me.bytebeats.mns.tool.NotificationUtil;
-import me.bytebeats.mns.meta.DigitalCurrency;
-import me.bytebeats.mns.tool.PinyinUtils;
 import me.bytebeats.mns.tool.StringResUtils;
 import me.bytebeats.mns.ui.AppSettingState;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
-import java.util.*;
 import java.util.Timer;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -156,16 +155,8 @@ public class SinaDigitalCurrencyHandler extends AbstractHandler {
         Object[][] data = new Object[cryptoCurrencies.size()][cryptoCurrencyColumnNames.length];
         for (int i = 0; i < cryptoCurrencies.size(); i++) {
             DigitalCurrency currency = cryptoCurrencies.get(i);
-            String name = currency.getName();
-            if (isInHiddenMode()) {
-                name = PinyinUtils.toPinyin(name);
-            }
-            if (i < cryptoCurrencies.size()) {
-                data[i] = new Object[]{name, currency.getSymbol(), currency.getPrice(), currency.formattedPnl(), currency.getPnlR()};
-                columnTextColors.put(i, currency.pnl());
-            } else {
-                break;
-            }
+            data[i] = new Object[]{currency.getName(), currency.getSymbol(), currency.getPrice(), currency.formattedPnl(), currency.getPnlR()};
+            columnTextColors.put(i, currency.pnl());
         }
         return data;
     }

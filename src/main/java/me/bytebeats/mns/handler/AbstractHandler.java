@@ -1,11 +1,9 @@
 package me.bytebeats.mns.handler;
 
-import com.intellij.ui.JBColor;
 import me.bytebeats.mns.UISettingProvider;
 import me.bytebeats.mns.listener.OnItemClick;
 import me.bytebeats.mns.listener.OnItemDoubleClick;
 import me.bytebeats.mns.listener.OnItemRightClickListener;
-import me.bytebeats.mns.tool.PinyinUtils;
 import me.bytebeats.mns.tool.StringResUtils;
 import me.bytebeats.mns.ui.AppSettingState;
 
@@ -15,19 +13,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
-
-/**
- * @author bytebeats
- * @version 1.0
- * @email <happychinapc@gmail.com>
- * @github https://github.com/bytebeats
- * @created on 2020/8/29 16:21
- * @description AbstractHandler defines common fields and methods to ui and data operation.
- */
+import java.util.*;
 
 public abstract class AbstractHandler implements UISettingProvider {
     protected Timer timer = null;
@@ -42,6 +30,7 @@ public abstract class AbstractHandler implements UISettingProvider {
     protected OnItemClick<String> onItemClickListener;
     protected OnItemDoubleClick<String> onItemDoubleClickListener;
     protected OnItemRightClickListener<String> onItemRightClickListener;
+    List<Integer> selectedIndices = new ArrayList<>();
 
     public AbstractHandler(JTable table, JLabel label) {
         this.jTable = table;
@@ -56,11 +45,47 @@ public abstract class AbstractHandler implements UISettingProvider {
             restoreTabSizes();
             DefaultTableModel model = new DefaultTableModel(convert2Data(), getColumnNames());
             jTable.setModel(model);
+            // 恢复列的显示状态
+            restoreColumnVisibility();
             resetTabSize();
             updateRowTextColors();
             updateTimestamp();
         });
     }
+
+    public void updateSelectedIndices(List<Integer> newSelectedIndices) {
+        this.selectedIndices = newSelectedIndices;
+        updateView(); // 重新加载数据
+    }
+
+    public void updateSymbols(List<String> symbols) {
+    }
+
+    private void restoreColumnVisibility() {
+        if (jTable == null || jTable.getColumnModel() == null) {
+            return; // 如果 jTable 未初始化或没有保存的列显示状态，直接返回
+        }
+
+        if (this.selectedIndices.isEmpty()) {
+            return;
+        }
+
+        int columnCount = jTable.getColumnCount();
+        for (int i = 0; i < columnCount; i++) {
+            if (this.selectedIndices.contains(i)) {
+                jTable.getColumnModel().getColumn(i).setPreferredWidth(100);
+                jTable.getColumnModel().getColumn(i).setMinWidth(100);
+                jTable.getColumnModel().getColumn(i).setWidth(100);
+                jTable.getColumnModel().getColumn(i).setMaxWidth(1000);
+            } else {
+                jTable.getColumnModel().getColumn(i).setPreferredWidth(0);
+                jTable.getColumnModel().getColumn(i).setMinWidth(0);
+                jTable.getColumnModel().getColumn(i).setWidth(0);
+                jTable.getColumnModel().getColumn(i).setMaxWidth(0);
+            }
+        }
+    }
+
 
     public abstract void load(List<String> symbols);
 
@@ -97,28 +122,11 @@ public abstract class AbstractHandler implements UISettingProvider {
 
     protected void updateTimestamp() {
         jLabel.setText(String.format(StringResUtils.REFRESH_TIMESTAMP, LocalDateTime.now().format(DateTimeFormatter.ofPattern(StringResUtils.TIMESTAMP_FORMATTER))));
-        if (isInHiddenMode()) {
-            jLabel.setForeground(JBColor.DARK_GRAY);
-        } else {
-            jLabel.setForeground(JBColor.RED);
-        }
+//        jLabel.setForeground(JBColor.RED);
     }
 
     protected String[] handleColumnNames(String[] columnNames) {
-        if (isInHiddenMode()) {
-            String[] columns = new String[columnNames.length];
-            for (int i = 0; i < columnNames.length; i++) {
-                columns[i] = PinyinUtils.toPinyin(columnNames[i]);
-            }
-            return columns;
-        } else {
-            return columnNames.clone();
-        }
-    }
-
-    @Override
-    public boolean isInHiddenMode() {
-        return AppSettingState.getInstance().isHiddenMode;
+        return columnNames.clone();
     }
 
     @Override

@@ -1,11 +1,10 @@
 package me.bytebeats.mns.handler;
 
+import me.bytebeats.mns.OnSymbolSelectedListener;
 import me.bytebeats.mns.listener.MousePressedListener;
+import me.bytebeats.mns.meta.Index;
 import me.bytebeats.mns.network.HttpClientPool;
 import me.bytebeats.mns.tool.NotificationUtil;
-import me.bytebeats.mns.OnSymbolSelectedListener;
-import me.bytebeats.mns.meta.Index;
-import me.bytebeats.mns.tool.PinyinUtils;
 import me.bytebeats.mns.tool.StringResUtils;
 import me.bytebeats.mns.ui.AppSettingState;
 
@@ -85,7 +84,7 @@ public class TencentIndexHandler extends AbstractHandler {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                fetch(symbols);
+                fetch(AppSettingState.getInstance().getAllIndex());
             }
         }, 0, frequency);
         NotificationUtil.info("starts updating " + getTipText() + " indices");
@@ -190,21 +189,16 @@ public class TencentIndexHandler extends AbstractHandler {
         Object[][] data = new Object[indices.size()][indexColumnNames.length];
         for (int i = 0; i < indices.size(); i++) {
             Index index = indices.get(i);
-            String name = index.getName();
 //            String highest = index.getHighestString();
 //            String lowest = index.getLowestString();
 //            String open = index.getOpenString();
 //            String close = index.getCloseString();
 //            String dailyRatio = index.getDailyRatioString();
 //            String turnover = index.getTurnoverString();
-            if (isInHiddenMode()) {
-                name = PinyinUtils.toPinyin(name);
-            }
-            if (i < indices.size()) {
-                data[i] = new Object[]{name, index.getSymbol(), index.getLatest(), index.getChange(),
-                        index.getChangeRatioString()};//, highest, lowest, open, close, dailyRatio, turnover
-                columnTextColors.put(i, index.getChange());
-            }
+
+            data[i] = new Object[]{index.getName(), index.getSymbol(), index.getLatest(), index.getChange(),
+                    index.getChangeRatioString()};//, highest, lowest, open, close, dailyRatio, turnover
+            columnTextColors.put(i, index.getChange());
         }
         return data;
     }

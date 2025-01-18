@@ -5,19 +5,13 @@ plugins {
 }
 
 group = "io.github.bytebeats"
-version = "2.0.0"
+version = "2.0.1"
 
 repositories {
-    maven {
-        url = uri("https://maven.aliyun.com/repository/google")
-    }
-    maven {
-        url = uri("https://maven.aliyun.com/repository/central")
-    }
-    maven {
-        url = uri("https://maven.aliyun.com/repository/jcenter")
-    }
     mavenCentral()
+    maven { url = uri("https://maven.aliyun.com/repository/google") }
+    maven { url = uri("https://maven.aliyun.com/repository/central") }
+    maven { url = uri("https://maven.aliyun.com/repository/jcenter") }
 }
 
 dependencies {
@@ -25,7 +19,6 @@ dependencies {
 }
 
 // Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     version.set("2023.2.5")
     type.set("IC") // Target IDE Platform
@@ -44,8 +37,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("230")
-        untilBuild.set("242.*")
+        sinceBuild.set("232")
+        untilBuild.set("243.*")
 
         changeNotes.set(
             """
@@ -69,17 +62,23 @@ tasks {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
+    // Configure buildPlugin task to set the archive file name
+    buildPlugin {
+        archiveFileName.set("mns-plus-${project.version}.zip")
+    }
+
     register<Copy>("MoveBuildArtifacts") {
         mustRunAfter("DeletePluginFiles")
         println("Moving Build Artifacts!")
         from(layout.buildDirectory.dir("distributions"))
-        include("mns-**.zip")
+        include("mns-plus-**.zip")
         into("plugins")
     }
 
     register<Delete>("DeletePluginFiles") {
         delete(files("plugins"))
     }
+
     named("build") {
         finalizedBy("MoveBuildArtifacts")
     }

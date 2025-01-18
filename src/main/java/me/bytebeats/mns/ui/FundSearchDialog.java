@@ -1,18 +1,23 @@
 package me.bytebeats.mns.ui;
 
 import com.google.gson.reflect.TypeToken;
-import me.bytebeats.mns.network.HttpClientPool;
-import me.bytebeats.mns.tool.NotificationUtil;
 import me.bytebeats.mns.meta.FundBrief;
 import me.bytebeats.mns.meta.FundFirm;
 import me.bytebeats.mns.meta.FundFirmOp;
+import me.bytebeats.mns.network.HttpClientPool;
 import me.bytebeats.mns.tool.GsonUtils;
+import me.bytebeats.mns.tool.NotificationUtil;
 import me.bytebeats.mns.tool.StringResUtils;
 import me.bytebeats.mns.ui.swing.JHintTextField;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +28,6 @@ public class FundSearchDialog extends JDialog {
     private JPanel fund_content_panel;
     private JLabel fund_brief_info;
     private JComboBox<String> fund_type_cb;
-    private JButton fund_search;
     private JTable fund_table;
     private JScrollPane fund_scroll_panel;
     private JTextField fund_keyword;
@@ -76,7 +80,8 @@ public class FundSearchDialog extends JDialog {
             }
         });
 
-        fund_search.addActionListener(e -> search());
+        // 设置文本变化时自动查询
+        setupKeywordFieldListener();
     }
 
 
@@ -249,10 +254,33 @@ public class FundSearchDialog extends JDialog {
         void onChange();
     }
 
-//    public static void main(String[] args) {//test codes
-//        FundSearchDialog dialog = new FundSearchDialog();
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
-//    }
+    private Timer searchTimer;
+
+    private void setupKeywordFieldListener() {
+        searchTimer = new Timer(500, e -> search());  // 500毫秒后执行搜索
+        searchTimer.setRepeats(false);  // 确保计时器只执行一次
+
+        fund_keyword.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+                restartTimer();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                restartTimer();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                // 此方法不用于纯文本文档的修改
+            }
+
+            private void restartTimer() {
+                if (searchTimer.isRunning()) {
+                    searchTimer.restart();
+                } else {
+                    searchTimer.start();
+                }
+            }
+        });
+    }
 }
+

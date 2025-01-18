@@ -16,7 +16,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CoreIndicesWindow implements SymbolParser {
@@ -30,26 +29,45 @@ public class CoreIndicesWindow implements SymbolParser {
 
     public CoreIndicesWindow() {
         handler = new TencentIndexHandler(indices_table, indices_timestamp);
-        handler.setOnItemDoubleClickListener((s, xOnScreen, yOnScreen) -> PopupsUtil.INSTANCE.popupStockChart(s, StockChartType.Minute, new Point(xOnScreen, yOnScreen)));
+        handler.setOnItemDoubleClickListener((s, xOnScreen, yOnScreen) -> {
+            JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<StockChartType>("操作", StockChartType.values()) {
+                @Override
+                public @NotNull String getTextFor(StockChartType value) {
+                    return value.getDescription();
+                }
+
+                @Override
+                public @Nullable PopupStep<?> onChosen(StockChartType selectedValue, boolean finalChoice) {
+                    PopupsUtil.INSTANCE.popupStockChart(s, selectedValue, new Point(xOnScreen, yOnScreen));
+                    // 如果是删除
+                    if (selectedValue == StockChartType.Delete && finalChoice) {
+                        AppSettingState.getInstance().deleteIndexSymbol(s);
+                        syncRefresh();
+                    }
+                    return super.onChosen(selectedValue, finalChoice);
+                }
+            }).show(RelativePoint.fromScreen(new Point(xOnScreen, yOnScreen)));
+        });
         handler.setOnItemRightClickListener(new OnItemRightClickListener<String>() {
             @Override
             public void onItemRightClick(String s, int xOnScreen, int yOnScreen) {
-                JBPopupFactory.getInstance()
-                        .createListPopup(new BaseListPopupStep<StockChartType>("K线图", StockChartType.values()) {
-                            @Override
-                            public @NotNull
-                            String getTextFor(StockChartType value) {
-                                return value.getDescription();
-                            }
+                JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<StockChartType>("操作", StockChartType.values()) {
+                    @Override
+                    public @NotNull String getTextFor(StockChartType value) {
+                        return value.getDescription();
+                    }
 
-                            @Override
-                            public @Nullable
-                            PopupStep<?> onChosen(StockChartType selectedValue, boolean finalChoice) {
-                                PopupsUtil.INSTANCE.popupStockChart(s, selectedValue, new Point(xOnScreen, yOnScreen));
-                                return super.onChosen(selectedValue, finalChoice);
-                            }
-                        })
-                        .show(RelativePoint.fromScreen(new Point(xOnScreen, yOnScreen)));
+                    @Override
+                    public @Nullable PopupStep<?> onChosen(StockChartType selectedValue, boolean finalChoice) {
+                        PopupsUtil.INSTANCE.popupStockChart(s, selectedValue, new Point(xOnScreen, yOnScreen));
+                        // 如果是删除
+                        if (selectedValue == StockChartType.Delete && finalChoice) {
+                            AppSettingState.getInstance().deleteIndexSymbol(s);
+                            syncRefresh();
+                        }
+                        return super.onChosen(selectedValue, finalChoice);
+                    }
+                }).show(RelativePoint.fromScreen(new Point(xOnScreen, yOnScreen)));
             }
         });
     }
@@ -70,28 +88,21 @@ public class CoreIndicesWindow implements SymbolParser {
     }
 
     private void syncRefresh() {
-        handler.load(parse());
+        handler.load(new ArrayList<>());
     }
 
     @Override
     public String prefix() {
-//        return "";//实时数据
-        return "s_";//简要信息
+        return "s_"; // 简要信息
     }
 
     @Override
     public String raw() {
-        return AppSettingState.ALL_INDICES;
+        return AppSettingState.getInstance().allIndices;
     }
 
     @Override
     public List<String> parse() {
-        List<String> symbols = new ArrayList<>();
-        String raw = raw();
-        assert raw != null;
-        if (!raw.isEmpty()) {
-            Arrays.stream(raw.split("[,; ]")).filter(s -> !s.isEmpty()).forEach(s -> symbols.add(prefix() + s));
-        }
-        return symbols;
+        return new ArrayList<>();
     }
 }

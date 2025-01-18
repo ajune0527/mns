@@ -2,15 +2,6 @@ package me.bytebeats.mns.meta;
 
 import java.util.Objects;
 
-/**
- * @Author bytebeats
- * @Email <happychinapc@gmail.com>
- * @Github https://github.com/bytebeats
- * @Created on 2020/10/8 13:50
- * @Version 1.0
- * @Description FundFirm means fund firms
- */
-
 public class FundFirm {
     private String code = "";
     private String name = "";

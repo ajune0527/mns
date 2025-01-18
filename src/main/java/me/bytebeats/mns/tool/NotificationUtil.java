@@ -4,15 +4,6 @@ import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.ex.ProjectManagerEx;
 
-/**
- * @Author bytebeats
- * @Email <happychinapc@gmail.com>
- * @Github https://github.com/bytebeats
- * @Created at 2021/9/19 15:06
- * @Version 1.0
- * @Description To display messages
- */
-
 public class NotificationUtil {
     private static final String NOTIFICATION_TITLE = "Money Never Sleeps";
     private static final String LOG_NOTIFICATION_GROUP = "Mns Log";

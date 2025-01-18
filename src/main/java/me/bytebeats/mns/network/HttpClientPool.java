@@ -15,15 +15,6 @@ import org.apache.http.util.EntityUtils;
 import java.net.URLDecoder;
 import java.util.Map;
 
-/**
- * @Author bytebeats
- * @Email <happychinapc@gmail.com>
- * @Github https://github.com/bytebeats
- * @Created at 2021/9/19 15:06
- * @Version 1.0
- * @Description HttpClient Pool
- */
-
 public class HttpClientPool {
 
     private HttpClientPool() {

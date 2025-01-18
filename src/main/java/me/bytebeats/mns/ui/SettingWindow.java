@@ -12,20 +12,15 @@ public class SettingWindow implements Configurable {
     private JPanel mns_setting;
     private JTextField us_stock_input;
     private JTextField hk_stock_input;
-    private JTextField sh_stock_input;
+    private JTextField cn_stock_input;
     private JLabel us_stock;
     private JLabel hk_stock;
-    private JLabel sh_stock;
+    private JLabel cn_stock;
     private JRadioButton red_rise_green_fall;
     private JRadioButton red_fall_green_rise;
     private JPanel mkt_setting_radio;
-    private JLabel hide_mode_desc;
-    private JCheckBox hide_mode_setting;
-    private JCheckBox hide_symbol;
-    private JLabel sz_stock;
-    private JTextField sz_stock_input;
     private JLabel idx_label;
-    private JLabel idx_input_noneditable;
+    private JTextField idx_input;
     private JLabel daily_fund;
     private JTextField daily_fund_input;
     private JLabel mkt_setting_label;
@@ -77,11 +72,6 @@ public class SettingWindow implements Configurable {
                 red_rise_green_fall.setSelected(false);
             }
         });
-        hide_mode_setting.addItemListener(e -> {
-            boolean hidden = e.getStateChange() == ItemEvent.SELECTED;
-            red_rise_green_fall.setEnabled(!hidden);
-            red_fall_green_rise.setEnabled(!hidden);
-        });
         return mns_setting;
     }
 
@@ -95,13 +85,11 @@ public class SettingWindow implements Configurable {
         final AppSettingState settings = AppSettingState.getInstance();
         settings.usStocks = us_stock_input.getText();
         settings.hkStocks = hk_stock_input.getText();
-        settings.shStocks = sh_stock_input.getText();
-        settings.szStocks = sz_stock_input.getText();
+        settings.cnStocks = cn_stock_input.getText();
         settings.dailyFunds = daily_fund_input.getText();
+        settings.allIndices = idx_input.getText();
         settings.cryptoCurrencies = crypto_currency_input.getText();
         settings.isRedRise = red_rise_green_fall.isSelected();
-        settings.isHiddenMode = hide_mode_setting.isSelected();
-        settings.isHiddenSymbol = hide_symbol.isSelected();
         settings.indicesFrequency = Integer.parseInt(refresh_frequency_indices_list.getSelectedItem().toString());
         settings.stockFrequency = Integer.parseInt(refresh_frequency_stock_list.getSelectedItem().toString());
         settings.fundFrequency = Integer.parseInt(refresh_frequency_fund_list.getSelectedItem().toString());
@@ -122,18 +110,13 @@ public class SettingWindow implements Configurable {
         final AppSettingState settings = AppSettingState.getInstance();
         us_stock_input.setText(settings.usStocks);
         hk_stock_input.setText(settings.hkStocks);
-        sh_stock_input.setText(settings.shStocks);
-        sz_stock_input.setText(settings.szStocks);
+        cn_stock_input.setText(settings.cnStocks);
         daily_fund_input.setText(settings.dailyFunds);
+        idx_input.setText(settings.allIndices);
         crypto_currency_input.setText(settings.cryptoCurrencies);
         red_rise_green_fall.setSelected(settings.isRedRise);
         red_fall_green_rise.setSelected(!settings.isRedRise);
-        boolean isHidden = settings.isHiddenMode;
         boolean isHiddenSymbol = settings.isHiddenSymbol;
-        red_rise_green_fall.setEnabled(!isHidden);
-        red_fall_green_rise.setEnabled(!isHidden);
-        hide_mode_setting.setSelected(isHidden);
-        hide_symbol.setSelected(isHidden);
         refresh_frequency_indices_list.setSelectedItem(String.valueOf(settings.indicesFrequency));
         refresh_frequency_stock_list.setSelectedItem(String.valueOf(settings.stockFrequency));
         refresh_frequency_fund_list.setSelectedItem(String.valueOf(settings.fundFrequency));

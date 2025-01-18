@@ -20,11 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/bytebeats">bytebeats</a>
- * @email <happychinapc@gmail.com>
- * @since 2020/8/25 11:32
- */
 public class FundWindow implements SymbolParser {
     private JPanel fund_window;
     private JScrollPane fund_scroll;
@@ -41,7 +36,24 @@ public class FundWindow implements SymbolParser {
 
     public FundWindow() {
         handler = new TianTianFundHandler(fund_table, fund_timestamp);
-        handler.setOnItemDoubleClickListener((s, xOnScreen, yOnScreen) -> PopupsUtil.INSTANCE.popFundChart(s, FundChartType.EstimatedNetWorth, new Point(xOnScreen, yOnScreen)));
+        handler.setOnItemDoubleClickListener((s, xOnScreen, yOnScreen) -> {
+            JBPopupFactory.getInstance()
+                    .createListPopup(new BaseListPopupStep<FundChartType>("K线图", FundChartType.values()) {
+                        @Override
+                        public @NotNull
+                        String getTextFor(FundChartType value) {
+                            return value.getDescription();
+                        }
+
+                        @Override
+                        public @Nullable
+                        PopupStep<?> onChosen(FundChartType selectedValue, boolean finalChoice) {
+                            PopupsUtil.INSTANCE.popFundChart(s, selectedValue, new Point(xOnScreen, yOnScreen));
+                            return super.onChosen(selectedValue, finalChoice);
+                        }
+                    })
+                    .show(RelativePoint.fromScreen(new Point(xOnScreen, yOnScreen)));
+        });
         handler.setOnItemRightClickListener(new OnItemRightClickListener<String>() {
             @Override
             public void onItemRightClick(String s, int xOnScreen, int yOnScreen) {

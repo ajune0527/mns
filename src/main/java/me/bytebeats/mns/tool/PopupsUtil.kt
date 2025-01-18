@@ -1,7 +1,6 @@
 package me.bytebeats.mns.tool
 
 import com.intellij.openapi.project.ProjectManager
-import com.intellij.openapi.project.ex.ProjectManagerEx
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.ui.awt.RelativePoint
 import com.intellij.ui.tabs.TabInfo
@@ -11,7 +10,7 @@ import me.bytebeats.mns.enumation.FundChartType
 import me.bytebeats.mns.enumation.StockChartType
 import java.awt.Point
 import java.net.MalformedURLException
-import java.net.URL
+import java.net.URI
 import javax.swing.ImageIcon
 import javax.swing.JLabel
 
@@ -31,12 +30,11 @@ object PopupsUtil {
             TabInfo(
                 JLabel(
                     ImageIcon(
-                        URL(
+                        URI.create(
                             StringResUtils.URL_FUND_CHART_ESTIMATED_NET_WORTH.format(
-                                code,
-                                System.currentTimeMillis()
+                                code, System.currentTimeMillis()
                             )
-                        )
+                        ).toURL()
                     )
                 )
             )
@@ -47,12 +45,8 @@ object PopupsUtil {
         netWorthTabInfo.text = chartType.description
         val tabs = JBTabsImpl(ProjectManager.getInstance().defaultProject)
         tabs.addTab(netWorthTabInfo)
-        JBPopupFactory.getInstance()
-            .createComponentPopupBuilder(tabs, null)
-            .setMovable(true)
-            .setRequestFocus(true)
-            .createPopup()
-            .show(RelativePoint.fromScreen(anchor))
+        JBPopupFactory.getInstance().createComponentPopupBuilder(tabs, null).setMovable(true).setRequestFocus(true)
+            .createPopup().show(RelativePoint.fromScreen(anchor))
     }
 
     /**
@@ -64,50 +58,34 @@ object PopupsUtil {
         return when (market) {
             "sh", "sz" -> {
                 StringResUtils.URL_SINA_CHART_CN_FORMATTER.format(
-                    StringResUtils.URL_SINA_CHART,
-                    chartType.type,
-                    stockSymbol,
-                    System.currentTimeMillis()
+                    StringResUtils.URL_SINA_CHART, chartType.type, stockSymbol, System.currentTimeMillis()
                 )
             }
+
             "us" -> {
                 if (chartType == StockChartType.Minute) {
                     StringResUtils.URL_SINA_CHART_MIN_FORMATTER.format(
-                        StringResUtils.URL_SINA_CHART,
-                        chartType.type,
-                        market,
-                        symbol,
-                        System.currentTimeMillis()
+                        StringResUtils.URL_SINA_CHART, chartType.type, market, symbol, System.currentTimeMillis()
                     )
                 } else {
                     StringResUtils.URL_SINA_CHART_US_FORMATTER.format(
-                        StringResUtils.URL_SINA_CHART,
-                        market,
-                        chartType.type,
-                        symbol,
-                        System.currentTimeMillis()
+                        StringResUtils.URL_SINA_CHART, market, chartType.type, symbol, System.currentTimeMillis()
                     )
                 }
             }
+
             "hk" -> {
                 if (chartType == StockChartType.Minute) {
                     StringResUtils.URL_SINA_CHART_MIN_FORMATTER.format(
-                        StringResUtils.URL_SINA_CHART,
-                        chartType.type,
-                        market,
-                        symbol,
-                        System.currentTimeMillis()
+                        StringResUtils.URL_SINA_CHART, chartType.type, market, symbol, System.currentTimeMillis()
                     )
                 } else {
                     StringResUtils.URL_SINA_CHART_HK_FORMATTER.format(
-                        StringResUtils.URL_SINA_CHART,
-                        market,
-                        chartType.type,
-                        symbol,
-                        System.currentTimeMillis()
+                        StringResUtils.URL_SINA_CHART, market, chartType.type, symbol, System.currentTimeMillis()
                     )
                 }
             }
+
             else -> ""
         }
     }
@@ -116,6 +94,10 @@ object PopupsUtil {
      * pop up k-line charts of stock
      */
     fun popupStockChart(stockSymbol: String, chartType: StockChartType, anchor: Point) {
+        if (chartType == StockChartType.Delete || chartType == StockChartType.Up || chartType == StockChartType.Down) {
+            return
+        }
+
         if (ProjectManager.getInstance().defaultProject.isDisposed) {
             return
         }
@@ -130,7 +112,7 @@ object PopupsUtil {
             if (type == chartType) {
                 tabs.select(tabInfo, true)
                 label.icon = try {
-                    ImageIcon(URL(chartUrl))
+                    ImageIcon(URI.create(chartUrl).toURL())
                 } catch (ignore: MalformedURLException) {
                     NotificationUtil.infoBalloon(ignore.message)
                     continue
@@ -147,7 +129,7 @@ object PopupsUtil {
                     if (!label.text.isNullOrBlank()) {
                         NotificationUtil.info(label.text)
                         label.icon = try {
-                            ImageIcon(URL(label.text))
+                            ImageIcon(URI.create(label.text).toURL())
                         } catch (ignore: MalformedURLException) {
                             NotificationUtil.infoBalloon(ignore.message)
                             return
@@ -157,12 +139,7 @@ object PopupsUtil {
                 }
             }
         })
-        JBPopupFactory.getInstance()
-            .createComponentPopupBuilder(tabs, null)
-            .setMovable(true)
-            .setRequestFocus(true)
-            .createPopup()
-            .show(RelativePoint.fromScreen(anchor))
+        JBPopupFactory.getInstance().createComponentPopupBuilder(tabs, null).setMovable(true).setRequestFocus(true)
+            .createPopup().show(RelativePoint.fromScreen(anchor))
     }
-
 }

@@ -1,10 +1,8 @@
 package me.bytebeats.mns.ui;
 
-import com.intellij.ui.JBColor;
+import me.bytebeats.mns.UISettingProvider;
 import me.bytebeats.mns.network.HttpClientPool;
 import me.bytebeats.mns.tool.NotificationUtil;
-import me.bytebeats.mns.UISettingProvider;
-import me.bytebeats.mns.tool.PinyinUtils;
 import me.bytebeats.mns.tool.StringResUtils;
 
 import javax.swing.*;
@@ -12,19 +10,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-/**
- * @Author bytebeats
- * @Email <happychinapc@gmail.com>
- * @Github https://github.com/bytebeats
- * @Created on 2020/9/14 20:25
- * @Version 1.0
- * @Description StockDetailWindow displays details of stock
- */
 
 public class StockDetailWindow implements UISettingProvider {
     private static final long REFRESH_INTERVAL = 10L * 1000L;
@@ -213,11 +202,7 @@ public class StockDetailWindow implements UISettingProvider {
         Matcher matcher = pattern.matcher(entity);
         if (matcher.find()) {
             String[] metas = matcher.group().split("~");
-            if (isInHiddenMode()) {
-                stock_detail_name.setText(PinyinUtils.toPinyin(metas[1]));
-            } else {
-                stock_detail_name.setText(metas[1]);
-            }
+            stock_detail_name.setText(metas[1]);
             stock_detail_symbol.setText(symbol);
             stock_detail_latest_price.setText(metas[3]);
             stock_detail_rise_fall.setText(metas[31]);
@@ -417,11 +402,7 @@ public class StockDetailWindow implements UISettingProvider {
 
     protected void updateTimestamp() {
         stock_detail_timestamp.setText(String.format(StringResUtils.REFRESH_TIMESTAMP, LocalDateTime.now().format(DateTimeFormatter.ofPattern(StringResUtils.TIMESTAMP_FORMATTER))));
-        if (isInHiddenMode()) {
-            stock_detail_timestamp.setForeground(JBColor.DARK_GRAY);
-        } else {
-            stock_detail_timestamp.setForeground(JBColor.RED);
-        }
+//        stock_detail_timestamp.setForeground(JBColor.RED);
     }
 
     private void updateLabels() {
@@ -463,22 +444,11 @@ public class StockDetailWindow implements UISettingProvider {
             labels.add(ask_5_label);
         }
         //toolTipText始终保持为汉字不变
-        boolean different = !stock_detail_handicap_label.getText().equals(stock_detail_handicap_label.getToolTipText());
-        if (isInHiddenMode() && !different) {
-            for (JLabel label : labels) {
-                label.setText(PinyinUtils.toPinyin(label.getToolTipText()));
-            }
-        } else if (!isInHiddenMode() && different) {
-            for (JLabel label : labels) {
-                label.setText(label.getToolTipText());
-            }
+        for (JLabel label : labels) {
+            label.setText(label.getToolTipText());
         }
     }
 
-    @Override
-    public boolean isInHiddenMode() {
-        return AppSettingState.getInstance().isHiddenMode;
-    }
 
     @Override
     public boolean isInHiddenSymbolMode() {

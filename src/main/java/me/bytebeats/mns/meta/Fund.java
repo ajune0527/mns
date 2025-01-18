@@ -2,11 +2,6 @@ package me.bytebeats.mns.meta;
 
 import java.util.Objects;
 
-/**
- * @author <a href="https://github.com/bytebeats">bytebeats</a>
- * @email <happychinapc@gmail.com>
- * @since 2020/8/24 20:39
- */
 public class Fund {
     private String fundcode;
     private String name;

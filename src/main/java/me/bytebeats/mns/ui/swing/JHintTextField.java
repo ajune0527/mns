@@ -7,15 +7,6 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-/**
- * @Author bytebeats
- * @Email <happychinapc@gmail.com>
- * @Github https://github.com/bytebeats
- * @Created on 2021/9/11 18:53
- * @Version 1.0
- * @Description JTextField with hint supported.
- */
-
 public class JHintTextField extends JTextField implements FocusListener {
     private final Font gainFont;
     private final Font lostFont;

@@ -2,11 +2,6 @@ package me.bytebeats.mns.tool;
 
 import com.github.promeg.pinyinhelper.Pinyin;
 
-/**
- * @author <a href="https://github.com/bytebeats">bytebeats</a>
- * @email <happychinapc@gmail.com>
- * @since 2020/8/19 16:48
- */
 public class PinyinUtils {
     public static String toPinyin(String input) {
         StringBuilder pinyins = new StringBuilder();

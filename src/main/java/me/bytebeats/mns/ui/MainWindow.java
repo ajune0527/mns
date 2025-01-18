@@ -19,17 +19,18 @@ public class MainWindow implements ToolWindowFactory, OnSymbolSelectedListener {
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         ContentFactory contentFactory = ContentFactory.getInstance();
-        Content indicesContent = contentFactory.createContent(indicesWindow.getJPanel(), StringResUtils.INDICES, true);
+//        Content indicesContent = contentFactory.createContent(indicesWindow.getJPanel(), StringResUtils.INDICES, true);
         Content stockContent = contentFactory.createContent(stockWindow.getJPanel(), StringResUtils.STOCK, true);
         Content fundContent = contentFactory.createContent(fundWindow.getJPanel(), StringResUtils.FUNDS, true);
-        Content cryptoCurrencyContent = contentFactory.createContent(digitalCurrencyWindow.getJPanel(), StringResUtils.CRYPTO_CURRENCIES, true);
+//        Content cryptoCurrencyContent = contentFactory.createContent(digitalCurrencyWindow.getJPanel(), StringResUtils.CRYPTO_CURRENCIES, true);
         Content stockDetailContent = contentFactory.createContent(stockDetailWindow.getJPanel(), StringResUtils.STOCK_DETAIL, true);
 
         //add stocks
-        toolWindow.getContentManager().addContent(indicesContent);
+//        toolWindow.getContentManager().addContent(indicesContent);
         toolWindow.getContentManager().addContent(stockContent);
         toolWindow.getContentManager().addContent(fundContent);
-        toolWindow.getContentManager().addContent(cryptoCurrencyContent);
+        // 加密货币暂时不需要
+        // toolWindow.getContentManager().addContent(cryptoCurrencyContent);
         toolWindow.getContentManager().addContent(stockDetailContent);
     }
 

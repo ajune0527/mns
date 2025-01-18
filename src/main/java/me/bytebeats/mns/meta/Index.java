@@ -4,11 +4,6 @@ import me.bytebeats.mns.tool.NumberFormatUtils;
 
 import java.util.Objects;
 
-/**
- * @author <a href="https://github.com/bytebeats">bytebeats</a>
- * @email <happychinapc@gmail.com>
- * @since 2020/8/24 20:39
- */
 public class Index {
     private String symbol = "";//股票代码
     private String name = "";//股票名称

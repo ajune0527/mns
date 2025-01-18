@@ -1,7 +1,6 @@
 <idea-plugin>
-    <id>me.bytebeats.mns</id>
-    <name>Money Never Sleeps</name>
-    <vendor email="happychinapc@gmail.com" url="https://github.com/bytebeats">bytebeats</vendor>
+    <id>me.ajune.mns.plus</id>
+    <name>Money Never Sleeps(PLUS)</name>
     <version>2.0.0</version>
     <idea-version since-build="230.*"/>
 
@@ -9,16 +8,13 @@
     mns: Money Never Sleeps!
     IntelliJ IDEA platform plugin. Supports instant stock market from USA, HK and China mainland.<br>
     IntelliJ IDEA 平台插件, 支持<b>股票</b>, <b>基金</b>和<b>数字货币</b>的行情数据的实时更新, 其中股票包括<b>美股</b>, <b>港股</b>和宇宙第一大<b>A股</b>!.<br>
-    Money never sleeps, NEITHER do We!<br>
-    金钱永不眠, 我们也不睡!<br>
     Good luck!<br>
     The most important thing is: Try <b>mns</b> and spread the word!<br>
-    使用说明: https://github.com/bytebeats/mns
+    使用说明: https://github.com/ajune0527/mns
     ]]></description>
 
     <change-notes><![CDATA[
-      v1.8.4 k-line chart of stock.<br>
-      v2.0.0 giant upgrade to the project and bugfix.<br>
+      * V2.0.1 supports sorting and search to add stocks.<br>
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
@@ -28,7 +24,7 @@
                 serviceImplementation="me.bytebeats.mns.ui.AppSettingState"/>
 
         <toolWindow
-                id="mns"
+                id="mns(plus)"
                 icon="/icon_mns.png"
                 anchor="left"
                 factoryClass="me.bytebeats.mns.ui.MainWindow"/>
@@ -36,7 +32,7 @@
         <applicationConfigurable
                 id="mns_setting"
                 instance="me.bytebeats.mns.ui.SettingWindow"
-                displayName="Money Never Sleeps"/>
+                displayName="Money Never Sleeps(plus)"/>
 
         <notificationGroup
                 displayType="NONE"

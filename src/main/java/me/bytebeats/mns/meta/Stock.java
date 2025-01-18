@@ -13,6 +13,7 @@ public class Stock {
     private double volume = 0.0;//成交量
     private double turnover = 0.0;//成交额
     private double marketValue = 0.0;//成交额
+    private String market = "";
 
     public Stock() {
 
@@ -26,6 +27,11 @@ public class Stock {
         }
     }
 
+    public void setSymbolCode(String symbolCode) {
+        this.symbol = symbolCode.replace("s_sz", "").replace("s_sh", "").
+                replace("s_hk", "").replace("s_us", "");
+    }
+
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
@@ -37,6 +43,16 @@ public class Stock {
     public void setName(String name) {
         this.name = name;
     }
+
+
+    public String getMarketName() {
+        return market;
+    }
+
+    public void setMarketName(String name) {
+        this.market = name;
+    }
+
 
     public double getLatestPrice() {
         return latestPrice;

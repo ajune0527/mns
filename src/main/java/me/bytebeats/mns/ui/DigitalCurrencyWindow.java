@@ -11,11 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/bytebeats">bytebeats</a>
- * @email <happychinapc@gmail.com>
- * @since 2021/9/17 11:32
- */
 public class DigitalCurrencyWindow implements SymbolParser {
     private JPanel digital_currency_window;
     private JScrollPane digital_currency_scroll;

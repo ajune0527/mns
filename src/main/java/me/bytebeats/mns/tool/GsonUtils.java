@@ -4,11 +4,6 @@ import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
 
-/**
- * @author <a href="https://github.com/bytebeats">bytebeats</a>
- * @email <happychinapc@gmail.com>
- * @since 2020/8/25 10:58
- */
 public class GsonUtils {
     private static Gson gson = new Gson();
 

@@ -1,25 +1,15 @@
 package me.bytebeats.mns.handler;
 
-import me.bytebeats.mns.tool.NotificationUtil;
 import me.bytebeats.mns.OnSymbolSelectedListener;
 import me.bytebeats.mns.UISettingProvider;
 import me.bytebeats.mns.meta.Stock;
-import me.bytebeats.mns.tool.PinyinUtils;
+import me.bytebeats.mns.tool.NotificationUtil;
 import me.bytebeats.mns.tool.StringResUtils;
 import me.bytebeats.mns.ui.AppSettingState;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * @author bytebeats
- * @version 1.0
- * @email <happychinapc@gmail.com>
- * @github https://github.com/bytebeats
- * @created on 2020/8/29 16:21
- * @description AbsStockHandler defines common fields and methods to ui and data operation of stocks.
- */
 
 public abstract class AbsStockHandler extends AbstractHandler implements UISettingProvider {
 
@@ -30,6 +20,7 @@ public abstract class AbsStockHandler extends AbstractHandler implements UISetti
             StringResUtils.STOCK_LATEST_PRICE, StringResUtils.RISE_AND_FALL, StringResUtils.RISE_AND_FALL_RATIO};
 
     private OnSymbolSelectedListener listener;
+    List<Integer> selectedIndices = new ArrayList<>();
 
     public AbsStockHandler(JTable table, JLabel label) {
         super(table, label);
@@ -83,19 +74,19 @@ public abstract class AbsStockHandler extends AbstractHandler implements UISetti
     public Object[][] convert2Data() {
         columnTextColors.clear();
         Object[][] data = new Object[stocks.size()][stockColumnNames.length];
-        for (int i = 0; i < stocks.size(); i++) {
-            Stock stock = stocks.get(i);
-            String name = stock.getName();
-            if (isInHiddenMode()) {
-                name = PinyinUtils.toPinyin(name);
-            }
-            if (i < stocks.size()) {//ArrayIndexOutOfBoundsException from issues: https://github.com/bytebeats/mns/issues/76
-                data[i] = new Object[]{name, stock.getSymbol(), stock.getLatestPrice(), stock.getChange(),
-                        stock.getChangeRatioString()};
+        try {
+            for (int i = 0; i < stocks.size(); i++) {
+                Stock stock = stocks.get(i);
+                data[i] = new Object[]{
+                        stock.getName(),
+                        stock.getSymbol(),
+                        stock.getLatestPrice(),
+                        stock.getChange(),
+                        stock.getChangeRatioString()
+                };
                 columnTextColors.put(i, stock.getChange());
-            } else {
-                break;
             }
+        } catch (Exception ignored) {
         }
         return data;
     }
