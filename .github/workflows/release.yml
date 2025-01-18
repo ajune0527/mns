@@ -1,0 +1,62 @@
+jobs:
+  build:
+    name: 打包插件
+    runs-on: ubuntu-latest
+    steps:
+      - name: 克隆仓库
+        uses: actions/checkout@v4
+        with:
+          ref: main # 指定主分支
+
+      - name: 设置 JDK 环境
+        uses: actions/setup-java@v3
+        with:
+          java-version: '23'
+          distribution: 'adopt'
+
+      - name: 安装依赖
+        run: ./gradlew dependencies
+
+      - name: 构建插件
+        run: ./gradlew buildPlugin
+
+      - name: 创建 ZIP 文件
+        run: |
+          cd build/distributions
+          zip -r mns-plus-${{ github.event.head_commit.message }}.zip .
+
+      - name: 上传构建工件
+        uses: actions/upload-artifact@v4
+        with:
+          name: mns-plus-plugin
+          path: build/distributions/mns-plus-${{ github.event.head_commit.message }}.zip
+
+  upload:
+    name: 上传到仓库的plugins目录
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 克隆仓库
+        uses: actions/checkout@v4
+        with:
+          ref: main # 指定主分支
+
+      - name: 下载构建工件
+        uses: actions/download-artifact@v4
+        with:
+          name: mns-plus-plugin
+
+      - name: 创建 plugins 目录
+        run: mkdir -p plugins
+
+      - name: 移动文件到 plugins 目录
+        run: |
+          mv mns-plus-${{ github.event.head_commit.message }}.zip plugins/
+
+      - name: 提交并推送
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add plugins/mns-plus-${{ github.event.head_commit.message }}.zip
+          git commit -m "Add mns-plus-${{ github.event.head_commit.message }}.zip to plugins directory"
+          git push origin main
