@@ -1,3 +1,11 @@
+name: 打包插件并上传到仓库的plugins目录
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # 允许手动触发该工作流
+
 jobs:
   build:
     name: 打包插件
